@@ -81,7 +81,8 @@ The default configuration object is:
 	beforeShowDay: [function],
 	dayDivAttrs: [],
 	dayTdAttrs: [],
-	applyBtnClass: ''
+	applyBtnClass: '',
+	fixDays: false
 }
 ```
 
@@ -151,6 +152,9 @@ if this is 0, means do not limit maximum days</i>
 <i> auto batch select mode </i>
 <i> false (default), week, month, week-range, month-range</i>
 
+<b>fixDays (Boolean || Integer)</b>
+<i>Fix range to specified number of days (`false` => disabled)</i>
+
 <b>beforeShowDay (Function)</b>
 <i>A function that takes a date as a parameter and must return an array with:
 [0]: true/false indicating whether or not this date is selectable
@@ -184,6 +188,7 @@ The resulting object then turns into `div` tag of the day attributes.</i>
 <i>An array of functions that take the today as a parameter and must return an object, e.g. `{style: " background-color: red; "}`.
 The returned objects then merge, adding up existing keys (in order of callbacks in the array), so strings with same keys get concatenated and numbers result in the sum of them.
 The resulting object then turns into `td` tag of the day attributes.</i>
+
 
 ```javascript
 {
