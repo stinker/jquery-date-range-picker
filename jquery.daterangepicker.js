@@ -392,9 +392,9 @@
 			shortcuts:
 			{
 				//'prev-days': [1,3,5,7],
-				'next-days': [3,5,7],
+				//'next-days': [3,5,7],
 				//'prev' : ['week','month','year'],
-				'next' : ['week','month','year']
+				//'next' : ['week','month','year']
 			},
 			customShortcuts : [],
 			inline:false,
@@ -413,7 +413,8 @@
 			{
 				return days > 1 ? days + ' days' : '';
 			},
-			showTopbar: true
+			showTopbar: true,
+			fixDays: false
 		},opt);
 
 		opt.start = false;
@@ -1005,6 +1006,44 @@
 				if (opt.time.enabled) {
 					changeTime("start", opt.start);
 				}
+			}
+			else if  (typeof opt.fixDays === 'number')
+			{
+				var mmax = opt.endDate ? moment(opt.endDate).endOf('day') : false;
+				var mmin = opt.startDate ? moment(opt.startDate).endOf('day'): false;
+				var minrange = mmax && mmin ? moment.duration(mmax - mmin).days() : false;
+
+				var mstart = moment(parseInt(time)).startOf('day');
+				var mend = moment(parseInt(time)).endOf('day').add(opt.fixDays, 'days');
+
+				var overlap = 0;
+
+                // Fix at the begin of interval when overlaps
+				if(mmin && mstart < mmin)
+				{
+					mstart = mmin;
+					mend = mmin.clone().startOf('day').add(opt.fixDays, 'days');
+					overlap++;
+				}
+
+                // Fix at the end of interval when overlaps
+				if(mmax && mend > mmax)
+				{
+					mstart = mmax.clone().endOf('day').subtract(opt.fixDays, 'days');
+					mend = mmax;
+					overlap++;
+				}
+
+                // Fix days interval is too big to fit between start and end date
+                // Select whole start to end interval
+				if(overlap && minrange && opt.fixDays > minrange)
+				{
+					mstart = mmin;
+					mend = mmax;
+				}
+
+				opt.start = mstart.valueOf();
+				opt.end = mend.valueOf();
 			}
 			else if  (opt.batchMode === 'week')
 			{
@@ -1611,6 +1650,7 @@
 				html += '<div class="shortcuts"><b>'+lang('shortcuts')+'</b>';
 
 				var data = opt.shortcuts;
+
 				if (data)
 				{
 					if (data['prev-days'] && data['prev-days'].length > 0)
@@ -1619,6 +1659,7 @@
 						for(var i=0;i<data['prev-days'].length; i++)
 						{
 							var name = data['prev-days'][i];
+                            name += ' ';
 							name += (data['prev-days'][i] > 1) ? lang('days') : lang('day');
 							html += ' <a href="javascript:;" shortcut="day,-'+data['prev-days'][i]+'">'+name+'</a>';
 						}
@@ -1631,6 +1672,7 @@
 						for(var i=0;i<data['next-days'].length; i++)
 						{
 							var name = data['next-days'][i];
+                            name += ' ';
 							name += (data['next-days'][i] > 1) ? lang('days') : lang('day');
 							html += ' <a href="javascript:;" shortcut="day,'+data['next-days'][i]+'">'+name+'</a>';
 						}

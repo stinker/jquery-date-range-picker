@@ -92,6 +92,22 @@ $(function()
 
 
 
+	console.log('cocl');
+	$('#date-range100a').dateRangePicker(
+	{
+		fixDays: 7,
+		showShortcuts: true,
+		startDate: moment().subtract(120, 'days').format('YYYY-MM-DD'),
+		endDate: moment().format('YYYY-MM-DD'),
+		shortcuts: {
+			'prev-days': [1,7,14,30]
+		}
+	});
+
+
+
+
+
 	$('#date-range1').dateRangePicker(
 	{
 		startOfWeek: 'monday',

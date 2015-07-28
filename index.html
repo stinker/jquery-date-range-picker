@@ -65,6 +65,18 @@
 
 			<h2>Demonstrations</h2>
 
+
+			<div class="demo">
+				 Predefined range of days with custom start and boundaries: <input id="date-range100a" size="60" value="">
+				 <a href="#" class="show-option">Show Config</a>
+				<pre class="options">
+{
+	fixDays: 7, 
+	showShortcuts: true
+}				</pre>
+			</div>
+
+
 			<div class="demo">
 				Default settings: <input id="date-range0" size="40" value=""> 
 				<a href="#" class="show-option">Show Config</a>
@@ -351,6 +363,7 @@
 }				</pre>
 			</div>
 
+
     <div class="demo">
 				Batch mode ( week-range ): <input id="date-range14-2" size="60" value="">
 				<a href="#" class="show-option">Show Config</a>
@@ -570,7 +583,8 @@ $('#date-range16-destroy').click(function(evt)
 	{
 		return days > 1 ? days + ' days' : '';
 	},
-	showTopbar: true
+	showTopbar: true,
+	fixDays: false
 }</pre>
 			</p>
 			<h3>You can use the following keys in the configObject to overwrite the default configuration:</h3>
@@ -672,6 +686,9 @@ $('#date-range16-destroy').click(function(evt)
 
 <b>showTopbar (Boolean)</b>
 	<i>If show the top bar.</i>
+
+<b>fixDays (Boolean || Integer)</b>
+	<i>Fix range to specified number of days (`false` => disabled)</i>
 
 </pre>
 
