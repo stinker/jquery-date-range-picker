@@ -92,7 +92,6 @@ $(function()
 
 
 
-	console.log('cocl');
 	$('#date-range100a').dateRangePicker(
 	{
 		fixDays: 7,

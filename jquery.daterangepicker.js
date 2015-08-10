@@ -414,7 +414,12 @@
 				return days > 1 ? days + ' days' : '';
 			},
 			showTopbar: true,
-			fixDays: false
+			fixDays: false,
+            windowButtonClasses: {
+                root: 'window-button btn btn-xs',
+                base: 'btn-primary',
+                selected: 'btn-success'
+            }
 		},opt);
 
 		opt.start = false;
@@ -672,7 +677,7 @@
 				e.preventDefault(); return false;
 			});
 
-			box.find('.apply-btn').click(function()
+            box.on('click', '.apply-btn', function()
 			{
 				closeDatePicker();
 				var dateRange = getDateString(new Date(opt.start))+ opt.separator +getDateString(new Date(opt.end));
@@ -684,7 +689,7 @@
 				});
 			});
 
-			box.find('[custom]').click(function()
+            box.on('click', '[custom]', function()
 			{
 				var valueName = $(this).attr('custom');
 				opt.start = false;
@@ -697,7 +702,16 @@
 				if (opt.autoClose) closeDatePicker();
 			});
 
-			box.find('[shortcut]').click(function()
+            box.on('click', '[window]', function()
+            {
+                opt.fixDays = parseInt($(this).attr('window'));
+                console.log('opt.fixDays', opt.fixDays);
+                box.find('.window-button').attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.base);
+                $(this).attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.selected);
+                return false;
+            });
+
+			box.on('click', '[shortcut]', function()
 			{
 				var shortcut = $(this).attr('shortcut');
 				var end = new Date(),start = false;
@@ -784,6 +798,8 @@
 					setDateRange(start,end);
 					checkSelectionValid();
 				}
+
+                return false;
 			});
 
 			box.find(".time1 input[type=range]").bind("change mousemove", function (e) {
@@ -1014,7 +1030,7 @@
 				var minrange = mmax && mmin ? moment.duration(mmax - mmin).days() : false;
 
 				var mstart = moment(parseInt(time)).startOf('day');
-				var mend = moment(parseInt(time)).endOf('day').add(opt.fixDays, 'days');
+				var mend = moment(parseInt(time)).endOf('day').add(opt.fixDays-1, 'days');
 
 				var overlap = 0;
 
@@ -1022,14 +1038,14 @@
 				if(mmin && mstart < mmin)
 				{
 					mstart = mmin;
-					mend = mmin.clone().startOf('day').add(opt.fixDays, 'days');
+					mend = mmin.clone().startOf('day').add(opt.fixDays-1, 'days');
 					overlap++;
 				}
 
                 // Fix at the end of interval when overlaps
-				if(mmax && mend > mmax)
+				if(mmax && mend >= mmax)
 				{
-					mstart = mmax.clone().endOf('day').subtract(opt.fixDays, 'days');
+					mstart = mmax.clone().endOf('day').subtract(opt.fixDays-1, 'days');
 					mend = mmax;
 					overlap++;
 				}
@@ -1603,7 +1619,17 @@
 			{
 				html += '<div class="drp_top-bar">';
 
-				if (opt.customTopBar)
+                if(opt.fixDays)
+                {
+                    html += '<div class="custom-top">';
+
+                    html += ' <span window="1" class="' + opt.windowButtonClasses.root + ' ' + ( opt.fixDays === 1 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Day</span>';
+                    html += ' <span window="7" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 7 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Week</span>';
+                    html += ' <span window="30" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 30 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Month</span>';
+
+                    html += '</div>';
+                }
+				else if (opt.customTopBar)
 				{
 					if (typeof opt.customTopBar == 'function') opt.customTopBar = opt.customTopBar();
 					html += '<div class="custom-top">'+opt.customTopBar+'</div>';
@@ -1618,7 +1644,6 @@
 					html += '</div>';
 				}
 
-			
 				html += '<div class="error-top">error</div>\
 						<div class="default-top">default</div>\
 						<input type="button" class="apply-btn disabled'+ getApplyBtnClass() +'" value="'+lang('apply')+'" />';
@@ -1645,6 +1670,7 @@
 				+'</div>';
 
 			html += '<div class="footer">';
+
 			if (opt.showShortcuts)
 			{
 				html += '<div class="shortcuts"><b>'+lang('shortcuts')+'</b>';
@@ -1661,7 +1687,7 @@
 							var name = data['prev-days'][i];
                             name += ' ';
 							name += (data['prev-days'][i] > 1) ? lang('days') : lang('day');
-							html += ' <a href="javascript:;" shortcut="day,-'+data['prev-days'][i]+'">'+name+'</a>';
+							html += ' <a href="" shortcut="day,-'+data['prev-days'][i]+'">'+name+'</a>';
 						}
 						html+='</span>';
 					}
@@ -1674,7 +1700,7 @@
 							var name = data['next-days'][i];
                             name += ' ';
 							name += (data['next-days'][i] > 1) ? lang('days') : lang('day');
-							html += ' <a href="javascript:;" shortcut="day,'+data['next-days'][i]+'">'+name+'</a>';
+							html += ' <a href="" shortcut="day,'+data['next-days'][i]+'">'+name+'</a>';
 						}
 						html+= '</span>';
 					}
@@ -1685,7 +1711,7 @@
 						for(var i=0;i<data['prev'].length; i++)
 						{
 							var name = lang('prev-'+data['prev'][i]);
-							html += ' <a href="javascript:;" shortcut="prev,'+data['prev'][i]+'">'+name+'</a>';
+							html += ' <a href="" shortcut="prev,'+data['prev'][i]+'">'+name+'</a>';
 						}
 						html+='</span>';
 					}
@@ -1696,7 +1722,7 @@
 						for(var i=0;i<data['next'].length; i++)
 						{
 							var name = lang('next-'+data['next'][i]);
-							html += ' <a href="javascript:;" shortcut="next,'+data['next'][i]+'">'+name+'</a>';
+							html += ' <a href="" shortcut="next,'+data['next'][i]+'">'+name+'</a>';
 						}
 						html+='</span>';
 					}
@@ -1707,7 +1733,7 @@
 					for(var i=0;i<opt.customShortcuts.length; i++)
 					{
 						var sh = opt.customShortcuts[i];
-						html+= '&nbsp;<span class="custom-shortcut"><a href="javascript:;" shortcut="custom">'+sh.name+'</a></span>';
+						html+= '&nbsp;<span class="custom-shortcut"><a href="" shortcut="custom">'+sh.name+'</a></span>';
 					}
 				}
 				html += '</div>';
@@ -1723,7 +1749,7 @@
 					for(var i=0;i<opt.customValues.length;i++)
 					{
 						var val = opt.customValues[i];
-							html+= '&nbsp;<span class="custom-value"><a href="javascript:;" custom="'+ val.value+'">'+val.name+'</a></span>';
+							html+= '&nbsp;<span class="custom-value"><a href="" custom="'+ val.value+'">'+val.name+'</a></span>';
 					}
 				}
 			}
