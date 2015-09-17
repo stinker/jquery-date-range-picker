@@ -52,7 +52,12 @@
 			'default-single' : 'Tarix seçin',
 			'default-less' : '%d gündən az bir tarix seçin',
 			'default-range' : '%d və %d gün aralığında tarixlər seçin',
-			'default-default': 'Tarix aralığı seçin'
+			'default-default': 'Tarix aralığı seçin',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'cn':
 		{
@@ -88,7 +93,12 @@
 			'default-default': '请选择一个日期范围',
 			'time':'时间',
 			'hour':'小时',
-			'minute':'分钟'
+			'minute':'分钟',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'cz':
 		{
@@ -121,7 +131,12 @@
 			'default-single' : 'Prosím zvolte datum',
 			'default-less' : 'Prosím zvolte rozsah data menší než %d dnů',
 			'default-range' : 'Prosím zvolte rozsah data mezi %d a %d dny',
-			'default-default': 'Prosím zvolte rozsah data'
+			'default-default': 'Prosím zvolte rozsah data',
+			'sel-day':'Den',
+			'sel-month':'Měsíc',
+			'sel-week':'Týden',
+			'sel-days7':'7 dní',
+			'sel-days30':'30 dní'
 		},
 		'en':
 		{
@@ -158,7 +173,12 @@
 			'default-default': 'Please select a date range',
 			'time':'Time',
 			'hour':'Hour',
-			'minute':'Minute'
+			'minute':'Minute',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'it':
 		{
@@ -191,7 +211,12 @@
 			'default-single' : 'Seleziona una data',
 			'default-less' : 'Seleziona un intervallo minore di %d giorni',
 			'default-range' : 'Seleziona un intervallo compreso tra i %d e i %d giorni',
-			'default-default': 'Seleziona un intervallo di date'
+			'default-default': 'Seleziona un intervallo di date',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'es':
 		{
@@ -224,7 +249,12 @@
 			'default-single' : 'Por favor selecciona un dia',
 			'default-less' : 'Por favor selecciona un rango menor a %d dias',
 			'default-range' : 'Por favor selecciona un rango entre %d y %d dias',
-			'default-default': 'Por favor selecciona un rango de fechas.'
+			'default-default': 'Por favor selecciona un rango de fechas.',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'de':
 		{
@@ -257,7 +287,12 @@
 			'default-single' : 'Bitte ein Datum auswählen',
 			'default-less' : 'Bitte weniger als %d Tage auswählen',
 			'default-range' : 'Bitte einen Datumsbereich zwischen %d und %d Tagen auswählen',
-			'default-default': 'Bitte ein Start- und Enddatum auswählen'
+			'default-default': 'Bitte ein Start- und Enddatum auswählen',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'ru':
 		{
@@ -290,7 +325,12 @@
 			'default-single': 'Пожалуйста выберите дату',
 			'default-less': 'Пожалуйста выберите диапазон меньше %d дней',
 			'default-range': 'Пожалуйста выберите диапазон между %d и %d днями',
-			'default-default': 'Пожалуйста выберите диапазон'
+			'default-default': 'Пожалуйста выберите диапазон',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'fr':
 		{
@@ -323,7 +363,12 @@
 			'default-single' : 'Merci de choisir une date',
 			'default-less' : 'Merci de choisir une intervalle inférieure %d jours',
 			'default-range' : 'Merci de choisir une intervalle comprise entre %d et %d jours',
-			'default-default': 'Merci de choisir une date'
+			'default-default': 'Merci de choisir une date',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		},
 		'hu':
 		{
@@ -356,7 +401,12 @@
 			'default-single' : 'Válassz egy napot',
 			'default-less' : 'Válassz ki egy időszakot ami rövidebb mint %d nap',
 			'default-range' : 'Válassz ki egy %d - %d nap hosszú időszakot',
-			'default-default': 'Válassz ki egy időszakot'
+			'default-default': 'Válassz ki egy időszakot',
+			'sel-day':'Day',
+			'sel-month':'Month',
+			'sel-week':'Week',
+			'sel-days7':'7 days',
+			'sel-days30':'30 days'
 		}
 	};
 
@@ -702,10 +752,9 @@
 				if (opt.autoClose) closeDatePicker();
 			});
 
-            box.on('click', '[window]', function()
+            box.on('click', '[data-window]', function()
             {
-                opt.fixDays = parseInt($(this).attr('window'));
-                console.log('opt.fixDays', opt.fixDays);
+                opt.fixDays = $(this).data('window');
                 box.find('.window-button').attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.base);
                 $(this).attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.selected);
                 return false;
@@ -877,6 +926,30 @@
 			var __default_string = opt.getValue.call(selfDom);
 			var defaults = __default_string ? __default_string.split( opt.separator ) : '';
 
+			// Restore foxDays attribute depending on preselected range
+			if(defaults && defaults.length === 2) {
+				var start = moment(defaults[0]),
+					end = moment(defaults[1]);
+
+				var weekKey = opt.startOfWeek === 'monday' ? 'isoweek' : 'week';
+
+				var s_sow = start.clone().startOf(weekKey).startOf('day'),
+					s_som = start.clone().startOf('month').startOf('day'),
+					e_eow = end.clone().endOf(weekKey).startOf('day'),
+					e_eom = end.clone().endOf('month').startOf('day');
+
+				if (start.isSame(s_sow) && end.isSame(e_eow)) {
+					opt.fixDays = 'week';
+				}
+				else if (start.isSame(s_som) && end.isSame(e_eom)) {
+					opt.fixDays = 'month';
+				}
+
+				box.find('.window-button').attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.base);
+				box.find('.window-button[data-window="'+opt.fixDays+'"]').attr('class', opt.windowButtonClasses.root + ' ' + opt.windowButtonClasses.selected);
+			}
+
+
 			if (defaults && ((defaults.length==1 && opt.singleDate) || defaults.length>=2))
 			{
 				var ___format = opt.format;
@@ -1029,8 +1102,8 @@
 				var mmin = opt.startDate ? moment(opt.startDate).endOf('day'): false;
 				var minrange = mmax && mmin ? moment.duration(mmax - mmin).days() : false;
 
-				var mstart = moment(parseInt(time)).startOf('day');
-				var mend = moment(parseInt(time)).endOf('day').add(opt.fixDays-1, 'days');
+				var mstart = moment(parseInt(time)).startOf('day').subtract(opt.fixDays-1, 'days');
+				var mend = moment(parseInt(time)).endOf('day');
 
 				var overlap = 0;
 
@@ -1061,7 +1134,7 @@
 				opt.start = mstart.valueOf();
 				opt.end = mend.valueOf();
 			}
-			else if  (opt.batchMode === 'week')
+			else if  (opt.batchMode === 'week' || opt.fixDays === 'week')
 			{
 				if (opt.startOfWeek === 'monday') {
 					opt.start = moment(parseInt(time)).startOf('isoweek').valueOf();
@@ -1071,7 +1144,7 @@
 					opt.start = moment(parseInt(time)).startOf('week').valueOf();
 				}
 			}
-			else if (opt.batchMode === 'month')
+			else if (opt.batchMode === 'month' || opt.fixDays === 'month')
 			{
 				opt.start = moment(parseInt(time)).startOf('month').valueOf();
 				opt.end = moment(parseInt(time)).endOf('month').valueOf();
@@ -1623,11 +1696,13 @@
                 {
                     html += '<div class="custom-top">';
 
-                    html += ' <span window="1" class="' + opt.windowButtonClasses.root + ' ' + ( opt.fixDays === 1 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Day</span>';
-                    html += ' <span window="7" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 7 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Week</span>';
-                    html += ' <span window="30" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 30 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">Month</span>';
+					html += ' <span data-window="1" class="' + opt.windowButtonClasses.root + ' ' + ( opt.fixDays === 1 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">'+lang('sel-day')+'</span>';
+					html += ' <span data-window="week" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 'week' ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">'+lang('sel-week')+'</span>';
+					html += ' <span data-window="month" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 'month' ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">'+lang('sel-month')+'</span>';
+					html += ' <span data-window="7" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 7 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">'+lang('sel-days7')+'</span>';
+					html += ' <span data-window="30" class="' + opt.windowButtonClasses.root + ' ' +( opt.fixDays === 30 ? opt.windowButtonClasses.selected : opt.windowButtonClasses.base ) + '">'+lang('sel-days30')+'</span>';
 
-                    html += '</div>';
+					html += '</div>';
                 }
 				else if (opt.customTopBar)
 				{
